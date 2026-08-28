@@ -231,7 +231,7 @@ GPT profile: [Test]
 Validator profile: [Test]
 ```
 
-Debug output should include resolved profile id, profile name, provider/API type, mode, selected preset, max tokens, and a short success/failure result. Connection Manager profile/secret resolution has had provider-specific bugs historically, so the plugin should make profile failures obvious instead of making the user debug 401s as orchestration bugs.
+Debug output should include resolved profile id, profile name, provider/API type, model, mode, selected preset, max tokens, and a short success/failure result. Connection Manager profile/secret resolution has had provider-specific bugs historically, so the plugin should make profile failures obvious instead of making the user debug 401s as orchestration bugs.
 
 If temporarily overriding a profile's preset for one helper request, restore the original profile value in `finally`.
 
@@ -522,7 +522,7 @@ Router logs must explain decisions:
     "charCount": 936,
     "paragraphCount": 11,
     "dialogueSegments": 5,
-    "completedActionCount": 7,
+    "sentenceBoundaryCount": 7,
     "explicitContinuationCue": false
   }
 }

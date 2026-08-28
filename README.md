@@ -1,4 +1,4 @@
-# ST Multi-Model Director v0.1A
+# ST Multi-Model Director v0.1A.1
 
 This is the hook prototype only.
 
@@ -10,7 +10,7 @@ Implemented:
 - Local router score logging for `director`, `interaction`, `expansion`, and `continuation`.
 - `ScenePacketManager` using one `setExtensionPrompt()` key.
 - Configurable Scene Packet injection depth and role.
-- Aggressive cleanup on interceptor entry, generation end, generation stop, chat change, extension disable, and errors.
+- Aggressive cleanup on interceptor entry, generation end, generation stop, chat change, extension disable, injection depth/role changes, manual packet disable, and errors.
 - Manual test packet injection.
 - Connection Manager profile dropdowns and test buttons.
 - Full debug trace panel.
@@ -46,7 +46,7 @@ Restart or reload SillyTavern, then open Extensions settings and enable `Multi-M
 7. Swipe: `userTurnMode` is `repeat_from_prior_user`.
 8. Continue: `userTurnMode` is `continuation`; no director planning is performed.
 9. Disabled extension: packet clears and native ST behavior returns.
-10. Test profile buttons: debug shows resolved profile/provider/mode/preset or a clear error.
+10. Test profile buttons: debug shows resolved profile/provider/model/mode/preset or a clear error.
 
 ## Notes
 

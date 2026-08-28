@@ -30,22 +30,25 @@ function bindControls() {
     if (!settings.enabled) await clearScenePacket('extension_disabled');
   });
 
-  $('#mmd_manual_packet_enabled').on('change', function onChange() {
+  $('#mmd_manual_packet_enabled').on('change', async function onChange() {
     settings.manualPacketEnabled = Boolean(this.checked);
     saveSettings();
     addDebugEntry('setting_changed', { key: 'manualPacketEnabled', value: settings.manualPacketEnabled });
+    if (!settings.manualPacketEnabled) await clearScenePacket('manual_packet_disabled');
   });
 
-  $('#mmd_injection_depth').on('change', function onChange() {
+  $('#mmd_injection_depth').on('change', async function onChange() {
     settings.injectionDepth = Number(this.value) || 0;
     saveSettings();
     addDebugEntry('setting_changed', { key: 'injectionDepth', value: settings.injectionDepth });
+    await clearScenePacket('injection_depth_changed');
   });
 
-  $('#mmd_injection_role').on('change', function onChange() {
+  $('#mmd_injection_role').on('change', async function onChange() {
     settings.injectionRole = String(this.value || 'system');
     saveSettings();
     addDebugEntry('setting_changed', { key: 'injectionRole', value: settings.injectionRole });
+    await clearScenePacket('injection_role_changed');
   });
 
   $('#mmd_manual_packet').on('input', function onInput() {
@@ -98,7 +101,8 @@ function fillProfileSelect($select, profiles, selectedId) {
   if (!$select?.length) return;
   const options = ['<option value="">Not selected</option>']
     .concat(profiles.map((profile) => {
-      const label = escapeHtml(`${profile.name} (${profile.api || 'unknown'}${profile.mode ? `/${profile.mode}` : ''})`);
+      const model = profile.model ? ` - ${profile.model}` : '';
+      const label = escapeHtml(`${profile.name} (${profile.api || 'unknown'}${profile.mode ? `/${profile.mode}` : ''}${model})`);
       return `<option value="${escapeHtml(profile.id)}">${label}</option>`;
     }));
   $select.html(options.join(''));

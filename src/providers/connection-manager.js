@@ -7,6 +7,7 @@ export function getConnectionProfiles(context) {
     id: profile.id,
     name: profile.name || profile.id,
     api: profile.api || '',
+    model: profile.model || '',
     mode: profile.mode || '',
     preset: profile.preset || '',
   }));
@@ -22,6 +23,7 @@ export async function testConnectionProfile(context, profileId, label) {
     profileId,
     profileName: profile?.name || '',
     api: profile?.api || '',
+    model: profile?.model || '',
     mode: profile?.mode || '',
     preset: profile?.preset || '',
   };

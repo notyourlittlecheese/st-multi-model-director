@@ -1,12 +1,16 @@
 const CONTINUATION_CUES = [
-  '继续',
-  '接着',
-  '然后他回答',
-  '然后她回答',
+  '继续写',
+  '接着写',
+  '继续上一段',
+  '接着他的反应',
+  '接着她的反应',
+  '继续他的反应',
+  '继续她的反应',
+  '然后他回答我刚才',
+  '然后她回答我刚才',
   '回答我刚才',
   '她会怎么回应',
   '他会怎么回应',
-  '继续写',
   'continue',
 ];
 
@@ -23,14 +27,14 @@ function extractFeatures(text) {
   const paragraphs = normalized ? normalized.split(/\n\s*\n|\n/).filter(Boolean) : [];
   const dialogueSegments = (normalized.match(/[“"][^”"]+[”"]/g) || []).length;
   const asciiDialogueSegments = (normalized.match(/(^|\n)\s*[-—].+/g) || []).length;
-  const completedActionCount = (normalized.match(/[。！？.!?]/g) || []).length;
-  const explicitContinuationCue = CONTINUATION_CUES.some((cue) => normalized.toLowerCase().includes(cue.toLowerCase()));
+  const sentenceBoundaryCount = (normalized.match(/[。！？.!?]/g) || []).length;
+  const explicitContinuationCue = hasExplicitContinuationCue(normalized);
 
   return {
     charCount: normalized.length,
     paragraphCount: paragraphs.length,
     dialogueSegments: dialogueSegments + asciiDialogueSegments,
-    completedActionCount,
+    sentenceBoundaryCount,
     explicitContinuationCue,
   };
 }
@@ -44,7 +48,7 @@ function scoreFeatures(features, turn) {
     clamp01(features.charCount / 1000) * 0.45 +
     clamp01(features.paragraphCount / 8) * 0.25 +
     clamp01(features.dialogueSegments / 5) * 0.15 +
-    clamp01(features.completedActionCount / 10) * 0.15;
+    clamp01(features.sentenceBoundaryCount / 10) * 0.15;
 
   const director =
     (1 - clamp01(features.charCount / 300)) * 0.65 +
@@ -64,6 +68,21 @@ function scoreFeatures(features, turn) {
 
 function pickMode(scores) {
   return Object.entries(scores).sort((a, b) => b[1] - a[1])[0]?.[0] || 'interaction';
+}
+
+function hasExplicitContinuationCue(text) {
+  const normalized = String(text || '').trim().toLowerCase();
+  if (!normalized) return false;
+  return CONTINUATION_CUES.some((cue) => {
+    const lowerCue = cue.toLowerCase();
+    return normalized === lowerCue ||
+      normalized.startsWith(`${lowerCue} `) ||
+      normalized.startsWith(`${lowerCue}：`) ||
+      normalized.startsWith(`${lowerCue}:`) ||
+      normalized.endsWith(` ${lowerCue}`) ||
+      normalized.endsWith(`，${lowerCue}`) ||
+      normalized.endsWith(`, ${lowerCue}`);
+  });
 }
 
 function clamp01(value) {
