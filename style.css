@@ -1,0 +1,29 @@
+#mmd_settings .mmd-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: end;
+  margin: 8px 0;
+}
+
+#mmd_settings .mmd-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 10px 0;
+}
+
+#mmd_settings label {
+  display: block;
+  margin: 8px 0;
+}
+
+#mmd_settings textarea,
+#mmd_settings select {
+  width: 100%;
+}
+
+#mmd_debug_trace {
+  font-family: var(--monoFontFamily, monospace);
+  white-space: pre;
+}

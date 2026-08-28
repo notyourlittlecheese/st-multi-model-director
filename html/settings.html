@@ -1,0 +1,79 @@
+<div id="mmd_settings" class="mmd-settings">
+  <div class="inline-drawer">
+    <div class="inline-drawer-toggle inline-drawer-header">
+      <b>Multi-Model Director</b>
+      <div class="inline-drawer-icon fa-solid fa-circle-chevron-down down"></div>
+    </div>
+    <div class="inline-drawer-content">
+      <label class="checkbox_label">
+        <input id="mmd_enabled" type="checkbox" />
+        Enabled
+      </label>
+
+      <label class="checkbox_label">
+        <input id="mmd_manual_packet_enabled" type="checkbox" />
+        Inject manual test packet
+      </label>
+
+      <div class="mmd-grid">
+        <label>
+          Injection depth
+          <select id="mmd_injection_depth">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="4">4</option>
+          </select>
+        </label>
+
+        <label>
+          Injection role
+          <select id="mmd_injection_role">
+            <option value="system">System</option>
+            <option value="user">User</option>
+          </select>
+        </label>
+      </div>
+
+      <label>
+        Manual test packet
+        <textarea id="mmd_manual_packet" rows="7"></textarea>
+      </label>
+
+      <div class="mmd-grid">
+        <label>
+          Gemini profile
+          <select id="mmd_gemini_profile"></select>
+        </label>
+        <button id="mmd_test_gemini" type="button" class="menu_button">Test Gemini</button>
+      </div>
+
+      <div class="mmd-grid">
+        <label>
+          GPT profile
+          <select id="mmd_gpt_profile"></select>
+        </label>
+        <button id="mmd_test_gpt" type="button" class="menu_button">Test GPT</button>
+      </div>
+
+      <div class="mmd-grid">
+        <label>
+          Validator profile
+          <select id="mmd_validator_profile"></select>
+        </label>
+        <button id="mmd_test_validator" type="button" class="menu_button">Test Validator</button>
+      </div>
+
+      <div class="mmd-actions">
+        <button id="mmd_refresh_profiles" type="button" class="menu_button">Refresh Profiles</button>
+        <button id="mmd_clear_packet" type="button" class="menu_button">Clear Packet</button>
+        <button id="mmd_clear_debug" type="button" class="menu_button">Clear Debug</button>
+      </div>
+
+      <label>
+        Debug trace
+        <textarea id="mmd_debug_trace" rows="14" readonly></textarea>
+      </label>
+    </div>
+  </div>
+</div>

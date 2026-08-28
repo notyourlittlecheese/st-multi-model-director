@@ -1,0 +1,12 @@
+{
+  "display_name": "Multi-Model Director",
+  "loading_order": 10,
+  "requires": [],
+  "optional": [],
+  "js": "index.js",
+  "css": "style.css",
+  "author": "JA + Codex",
+  "version": "0.1.0-a",
+  "homePage": "https://github.com/SillyTavern/SillyTavern",
+  "generate_interceptor": "stMultiModelDirectorInterceptor"
+}
