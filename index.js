@@ -22,7 +22,7 @@ jQuery(async () => {
   await mountSettings(context);
   registerEvents();
   window.stMultiModelDirectorInterceptor = stMultiModelDirectorInterceptor;
-  addDebugEntry('extension_loaded', { version: '0.1.2-a' });
+  addDebugEntry('extension_loaded', { version: '0.1.3-a' });
 });
 
 export async function stMultiModelDirectorInterceptor(chat, contextSize, abort, type) {

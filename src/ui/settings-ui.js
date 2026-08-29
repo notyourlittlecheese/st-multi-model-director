@@ -7,8 +7,13 @@ let contextRef;
 
 export async function mountSettings(context) {
   contextRef = context;
-  const html = await $.get(`${context.extensionFolderPath}/html/settings.html`);
-  $('#extensions_settings').append(html);
+  const extensionFolderPath = getExtensionFolderPath();
+  const html = await $.get(`${extensionFolderPath}/html/settings.html`);
+  const $target = $('#extensions_settings2').length ? $('#extensions_settings2') : $('#extensions_settings');
+  if (!$target.length) {
+    throw new Error('Could not find SillyTavern extension settings container');
+  }
+  $target.append(html);
   bindControls();
   refreshProfileSelects();
   renderSettings();
@@ -131,4 +136,8 @@ function escapeHtml(value) {
     .replaceAll('>', '&gt;')
     .replaceAll('"', '&quot;')
     .replaceAll("'", '&#039;');
+}
+
+function getExtensionFolderPath() {
+  return new URL('../../', import.meta.url).pathname.replace(/^\//, '').replace(/\/+$/, '');
 }

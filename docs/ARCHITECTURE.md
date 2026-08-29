@@ -26,6 +26,8 @@ Sources:
 - custom request / connection profile service: https://raw.githubusercontent.com/SillyTavern/SillyTavern/release/public/scripts/custom-request.js and https://raw.githubusercontent.com/SillyTavern/SillyTavern/release/public/scripts/extensions/shared.js
 - Reference implementation inspected locally from https://github.com/luisbrandao/SillyTavern-Director. It is not a product match, but it is useful for mechanical patterns around `GENERATION_AFTER_COMMANDS`, `setExtensionPrompt`, Connection Manager calls, configurable depth/role, and fallback behavior.
 
+Implementation correction from v0.1A.3: mount settings UI into `#extensions_settings2` when available, falling back to `#extensions_settings`. Derive the extension folder path from `import.meta.url`; do not assume `context.extensionFolderPath` exists.
+
 ## Answers To Required Questions
 
 ### 1. How Current Third-Party Extensions Listen To Generation
