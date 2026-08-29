@@ -9,7 +9,7 @@ Scope: this document treats the pasted PRD and the `Ashen Bridge` Claude preset 
 
 Verified against SillyTavern release documentation and release-branch source:
 
-- UI extensions run in the browser, can use `SillyTavern.getContext()`, and can access chat state, settings, event bus, generation helpers, prompt injection helpers, and custom request services.
+- UI extensions run in the browser, can use `getContext()` from `scripts/extensions.js`, and can access chat state, settings, generation helpers, prompt injection helpers, and custom request services. Lifecycle events should import `eventSource` / `event_types` from `script.js`.
 - Third-party extensions are loaded from an extension folder with `manifest.json`; the manifest supports `js`, `css`, lifecycle `hooks`, `loading_order`, and `generate_interceptor`.
 - A prompt interceptor is currently the right pre-generation hook. It is registered via `manifest.json.generate_interceptor` and called before the request is built for generation.
 - Generation lifecycle events exist, including `GENERATION_AFTER_COMMANDS`, `GENERATION_STARTED`, `STREAM_TOKEN_RECEIVED`, `GENERATION_STOPPED`, and `GENERATION_ENDED`.
@@ -33,7 +33,7 @@ Sources:
 Use two mechanisms:
 
 1. Register `generate_interceptor` in `manifest.json`. This is the only verified pre-prompt-build interception point suitable for deciding route, calling helper agents, and injecting a Scene Packet.
-2. Subscribe to lifecycle events with `SillyTavern.getContext().eventSource.on(...)` for observability, cleanup, debug logging, and post-generation lint reporting.
+2. Subscribe to lifecycle events with `eventSource.on(...)`, importing `eventSource` and `event_types` from `script.js`, for observability, cleanup, debug logging, and post-generation lint reporting.
 
 Do not assume an unverified `beforeGenerate`, `onPromptBuild`, or `afterPromptBuild` hook exists.
 
@@ -73,7 +73,7 @@ Expected routing behavior:
 
 ### 3. How To Access Current Chat Context
 
-Use `const context = SillyTavern.getContext()`.
+Use `const context = getContext()` imported from `scripts/extensions.js`.
 
 Relevant fields/functions verified in `st-context.js`:
 

@@ -1,4 +1,4 @@
-# ST Multi-Model Director v0.1A.1
+# ST Multi-Model Director v0.1A.2
 
 This is the hook prototype only.
 
@@ -14,6 +14,7 @@ Implemented:
 - Manual test packet injection.
 - Connection Manager profile dropdowns and test buttons.
 - Full debug trace panel.
+- Chinese settings UI.
 
 Not implemented yet:
 

@@ -99,7 +99,7 @@ function renderSettings() {
 
 function fillProfileSelect($select, profiles, selectedId) {
   if (!$select?.length) return;
-  const options = ['<option value="">Not selected</option>']
+  const options = ['<option value="">未选择</option>']
     .concat(profiles.map((profile) => {
       const model = profile.model ? ` - ${profile.model}` : '';
       const label = escapeHtml(`${profile.name} (${profile.api || 'unknown'}${profile.mode ? `/${profile.mode}` : ''}${model})`);

@@ -1,6 +1,9 @@
 import {
   event_types,
   eventSource,
+} from '../../../../script.js';
+
+import {
   getContext,
 } from '../../../../scripts/extensions.js';
 
@@ -19,7 +22,7 @@ jQuery(async () => {
   await mountSettings(context);
   registerEvents();
   window.stMultiModelDirectorInterceptor = stMultiModelDirectorInterceptor;
-  addDebugEntry('extension_loaded', { version: '0.1.1-a' });
+  addDebugEntry('extension_loaded', { version: '0.1.2-a' });
 });
 
 export async function stMultiModelDirectorInterceptor(chat, contextSize, abort, type) {
