@@ -13,10 +13,11 @@ export function getConnectionProfiles(context) {
   }));
 }
 
-export async function testConnectionProfile(context, profileId, label) {
+export async function testConnectionProfile(context, profileId, label, modelOverride = '') {
   if (!profileId) throw new Error(`${label} profile is not selected`);
   const service = context?.ConnectionManagerRequestService;
   if (!service) throw new Error('ConnectionManagerRequestService is not available');
+  const effectiveModel = String(modelOverride || '').trim();
 
   const profile = service.getProfile?.(profileId);
   const resolved = {
@@ -24,6 +25,8 @@ export async function testConnectionProfile(context, profileId, label) {
     profileName: profile?.name || '',
     api: profile?.api || '',
     model: profile?.model || '',
+    modelOverride: effectiveModel,
+    effectiveModel: effectiveModel || profile?.model || '',
     mode: profile?.mode || '',
     preset: profile?.preset || '',
   };
@@ -42,6 +45,7 @@ export async function testConnectionProfile(context, profileId, label) {
     messages,
     16,
     { stream: false, extractData: true, includePreset: true },
+    effectiveModel ? { model: effectiveModel } : {},
   );
   const latencyMs = Math.round(performance.now() - started);
   const content = typeof response === 'function'

@@ -28,6 +28,8 @@ Sources:
 
 Implementation correction from v0.1A.3: mount settings UI into `#extensions_settings2` when available, falling back to `#extensions_settings`. Derive the extension folder path from `import.meta.url`; do not assume `context.extensionFolderPath` exists.
 
+Implementation correction from v0.1A.4: settings UI is mobile-friendly and auxiliary requests support optional per-helper `model` override via Connection Manager `overridePayload`. This is not yet an automatic provider model picker; leave the field empty to use the selected profile's model.
+
 ## Answers To Required Questions
 
 ### 1. How Current Third-Party Extensions Listen To Generation

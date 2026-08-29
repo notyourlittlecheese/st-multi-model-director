@@ -16,6 +16,11 @@ export const defaultSettings = Object.freeze({
     gpt: '',
     validator: '',
   },
+  modelOverrides: {
+    gemini: '',
+    gpt: '',
+    validator: '',
+  },
   debugLimit: 20,
 });
 

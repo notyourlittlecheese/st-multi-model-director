@@ -15,7 +15,7 @@
         注入手动测试 Scene Packet
       </label>
 
-      <div class="mmd-grid">
+      <div class="mmd-two-col">
         <label>
           注入深度
           <select id="mmd_injection_depth">
@@ -40,28 +40,40 @@
         <textarea id="mmd_manual_packet" rows="7"></textarea>
       </label>
 
-      <div class="mmd-grid">
+      <div class="mmd-profile-block">
         <label>
           Gemini 连接配置
           <select id="mmd_gemini_profile"></select>
         </label>
-        <button id="mmd_test_gemini" type="button" class="menu_button">测试 Gemini</button>
+        <label>
+          Gemini 模型覆写
+          <input id="mmd_gemini_model" type="text" placeholder="留空则使用连接配置里的模型" />
+        </label>
+        <button id="mmd_test_gemini" type="button" class="menu_button mmd-button">测试 Gemini</button>
       </div>
 
-      <div class="mmd-grid">
+      <div class="mmd-profile-block">
         <label>
           GPT 连接配置
           <select id="mmd_gpt_profile"></select>
         </label>
-        <button id="mmd_test_gpt" type="button" class="menu_button">测试 GPT</button>
+        <label>
+          GPT 模型覆写
+          <input id="mmd_gpt_model" type="text" placeholder="留空则使用连接配置里的模型" />
+        </label>
+        <button id="mmd_test_gpt" type="button" class="menu_button mmd-button">测试 GPT</button>
       </div>
 
-      <div class="mmd-grid">
+      <div class="mmd-profile-block">
         <label>
           Validator 连接配置
           <select id="mmd_validator_profile"></select>
         </label>
-        <button id="mmd_test_validator" type="button" class="menu_button">测试 Validator</button>
+        <label>
+          Validator 模型覆写
+          <input id="mmd_validator_model" type="text" placeholder="留空则使用连接配置里的模型" />
+        </label>
+        <button id="mmd_test_validator" type="button" class="menu_button mmd-button">测试 Validator</button>
       </div>
 
       <div class="mmd-actions">

@@ -1,4 +1,4 @@
-# ST Multi-Model Director v0.1A.3
+# ST Multi-Model Director v0.1A.4
 
 This is the hook prototype only.
 
@@ -16,6 +16,8 @@ Implemented:
 - Full debug trace panel.
 - Chinese settings UI.
 - Settings panel mounted into SillyTavern's current extension settings container.
+- Mobile-friendly settings layout.
+- Optional per-helper model override for Connection Manager tests.
 
 Not implemented yet:
 

@@ -76,6 +76,21 @@ function bindControls() {
     saveSettings();
   });
 
+  $('#mmd_gemini_model').on('input', function onInput() {
+    settings.modelOverrides.gemini = String(this.value || '').trim();
+    saveSettings();
+  });
+
+  $('#mmd_gpt_model').on('input', function onInput() {
+    settings.modelOverrides.gpt = String(this.value || '').trim();
+    saveSettings();
+  });
+
+  $('#mmd_validator_model').on('input', function onInput() {
+    settings.modelOverrides.validator = String(this.value || '').trim();
+    saveSettings();
+  });
+
   $('#mmd_refresh_profiles').on('click', () => {
     refreshProfileSelects();
     addDebugEntry('profiles_refreshed', { count: getConnectionProfiles(contextRef).length });
@@ -100,6 +115,9 @@ function renderSettings() {
   $('#mmd_injection_depth').val(String(settings.injectionDepth));
   $('#mmd_injection_role').val(settings.injectionRole);
   $('#mmd_manual_packet').val(settings.manualPacket);
+  $('#mmd_gemini_model').val(settings.modelOverrides.gemini);
+  $('#mmd_gpt_model').val(settings.modelOverrides.gpt);
+  $('#mmd_validator_model').val(settings.modelOverrides.validator);
 }
 
 function fillProfileSelect($select, profiles, selectedId) {
@@ -116,7 +134,7 @@ function fillProfileSelect($select, profiles, selectedId) {
 
 async function runProfileTest(label, profileId) {
   try {
-    const result = await testConnectionProfile(contextRef, profileId, label);
+    const result = await testConnectionProfile(contextRef, profileId, label, settings.modelOverrides[label]);
     toastr?.success?.(`${label} profile OK (${result.latencyMs} ms)`);
   } catch (error) {
     addDebugEntry('connection_test_failed', { label, error: error?.message || String(error) });
