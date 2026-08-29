@@ -1,18 +1,18 @@
 <div id="mmd_settings" class="mmd-settings">
   <div class="inline-drawer">
     <div class="inline-drawer-toggle inline-drawer-header">
-      <b>Multi-Model Director｜多模型导演</b>
+      <b>Multi-Model Director</b>
       <div class="inline-drawer-icon fa-solid fa-circle-chevron-down down"></div>
     </div>
     <div class="inline-drawer-content">
-      <label class="checkbox_label">
+      <label class="mmd-checkbox-row">
         <input id="mmd_enabled" type="checkbox" />
-        启用
+        <span>启用</span>
       </label>
 
-      <label class="checkbox_label">
+      <label class="mmd-checkbox-row">
         <input id="mmd_manual_packet_enabled" type="checkbox" />
-        注入手动测试 Scene Packet
+        <span>注入手动测试 Scene Packet</span>
       </label>
 
       <div class="mmd-two-col">
@@ -46,10 +46,10 @@
           <select id="mmd_gemini_profile"></select>
         </label>
         <label>
-          Gemini 模型覆写
-          <input id="mmd_gemini_model" type="text" placeholder="留空则使用连接配置里的模型" />
+          Gemini 模型
+          <select id="mmd_gemini_model"></select>
         </label>
-        <button id="mmd_test_gemini" type="button" class="menu_button mmd-button">测试 Gemini</button>
+        <button id="mmd_test_gemini" type="button" class="menu_button mmd-button">检查 Gemini 配置</button>
       </div>
 
       <div class="mmd-profile-block">
@@ -58,10 +58,10 @@
           <select id="mmd_gpt_profile"></select>
         </label>
         <label>
-          GPT 模型覆写
-          <input id="mmd_gpt_model" type="text" placeholder="留空则使用连接配置里的模型" />
+          GPT 模型
+          <select id="mmd_gpt_model"></select>
         </label>
-        <button id="mmd_test_gpt" type="button" class="menu_button mmd-button">测试 GPT</button>
+        <button id="mmd_test_gpt" type="button" class="menu_button mmd-button">检查 GPT 配置</button>
       </div>
 
       <div class="mmd-profile-block">
@@ -70,10 +70,10 @@
           <select id="mmd_validator_profile"></select>
         </label>
         <label>
-          Validator 模型覆写
-          <input id="mmd_validator_model" type="text" placeholder="留空则使用连接配置里的模型" />
+          Validator 模型
+          <select id="mmd_validator_model"></select>
         </label>
-        <button id="mmd_test_validator" type="button" class="menu_button mmd-button">测试 Validator</button>
+        <button id="mmd_test_validator" type="button" class="menu_button mmd-button">检查 Validator 配置</button>
       </div>
 
       <div class="mmd-actions">

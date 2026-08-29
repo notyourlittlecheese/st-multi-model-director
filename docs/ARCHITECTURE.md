@@ -30,6 +30,8 @@ Implementation correction from v0.1A.3: mount settings UI into `#extensions_sett
 
 Implementation correction from v0.1A.4: settings UI is mobile-friendly and auxiliary requests support optional per-helper `model` override via Connection Manager `overridePayload`. This is not yet an automatic provider model picker; leave the field empty to use the selected profile's model.
 
+Implementation correction from v0.1A.5: profile buttons now perform local configuration checks only and do not call `sendRequest()`. Model fields are dropdowns populated from local candidates gathered from saved Connection Profiles and visible SillyTavern model selectors. The extension settings title keeps the English product name only.
+
 ## Answers To Required Questions
 
 ### 1. How Current Third-Party Extensions Listen To Generation

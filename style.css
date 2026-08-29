@@ -19,6 +19,22 @@
   border-radius: 8px;
 }
 
+#mmd_settings .mmd-checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0;
+}
+
+#mmd_settings .mmd-checkbox-row input[type="checkbox"] {
+  flex: 0 0 auto;
+  margin: 0;
+}
+
+#mmd_settings .mmd-checkbox-row span {
+  line-height: 1.4;
+}
+
 #mmd_settings .mmd-actions {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -32,8 +48,7 @@
 }
 
 #mmd_settings textarea,
-#mmd_settings select,
-#mmd_settings input[type="text"] {
+#mmd_settings select {
   box-sizing: border-box;
   width: 100%;
 }
@@ -41,7 +56,8 @@
 #mmd_settings .mmd-button,
 #mmd_settings .mmd-actions .menu_button {
   min-height: 36px;
-  white-space: normal;
+  width: 100%;
+  white-space: nowrap;
   word-break: keep-all;
 }
 

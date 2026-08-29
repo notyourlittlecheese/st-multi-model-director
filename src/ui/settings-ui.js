@@ -1,5 +1,5 @@
 import { clearScenePacket } from '../core/scene-packet-manager.js';
-import { getConnectionProfiles, testConnectionProfile } from '../providers/connection-manager.js';
+import { checkConnectionProfile, getConnectionProfiles, getModelCandidates } from '../providers/connection-manager.js';
 import { clearDebugEntries, setDebugRenderCallback, addDebugEntry } from '../state/debug-log.js';
 import { saveSettings, settings } from '../settings.js';
 
@@ -22,9 +22,13 @@ export async function mountSettings(context) {
 
 export function refreshProfileSelects() {
   const profiles = getConnectionProfiles(contextRef);
+  const models = getModelCandidates(contextRef);
   fillProfileSelect($('#mmd_gemini_profile'), profiles, settings.profiles.gemini);
   fillProfileSelect($('#mmd_gpt_profile'), profiles, settings.profiles.gpt);
   fillProfileSelect($('#mmd_validator_profile'), profiles, settings.profiles.validator);
+  fillModelSelect($('#mmd_gemini_model'), models, settings.modelOverrides.gemini);
+  fillModelSelect($('#mmd_gpt_model'), models, settings.modelOverrides.gpt);
+  fillModelSelect($('#mmd_validator_model'), models, settings.modelOverrides.validator);
 }
 
 function bindControls() {
@@ -76,17 +80,17 @@ function bindControls() {
     saveSettings();
   });
 
-  $('#mmd_gemini_model').on('input', function onInput() {
+  $('#mmd_gemini_model').on('change', function onChange() {
     settings.modelOverrides.gemini = String(this.value || '').trim();
     saveSettings();
   });
 
-  $('#mmd_gpt_model').on('input', function onInput() {
+  $('#mmd_gpt_model').on('change', function onChange() {
     settings.modelOverrides.gpt = String(this.value || '').trim();
     saveSettings();
   });
 
-  $('#mmd_validator_model').on('input', function onInput() {
+  $('#mmd_validator_model').on('change', function onChange() {
     settings.modelOverrides.validator = String(this.value || '').trim();
     saveSettings();
   });
@@ -104,9 +108,9 @@ function bindControls() {
     clearDebugEntries();
   });
 
-  $('#mmd_test_gemini').on('click', () => runProfileTest('gemini', settings.profiles.gemini));
-  $('#mmd_test_gpt').on('click', () => runProfileTest('gpt', settings.profiles.gpt));
-  $('#mmd_test_validator').on('click', () => runProfileTest('validator', settings.profiles.validator));
+  $('#mmd_test_gemini').on('click', () => runProfileCheck('gemini', settings.profiles.gemini));
+  $('#mmd_test_gpt').on('click', () => runProfileCheck('gpt', settings.profiles.gpt));
+  $('#mmd_test_validator').on('click', () => runProfileCheck('validator', settings.profiles.validator));
 }
 
 function renderSettings() {
@@ -132,13 +136,24 @@ function fillProfileSelect($select, profiles, selectedId) {
   $select.val(selectedId || '');
 }
 
-async function runProfileTest(label, profileId) {
+function fillModelSelect($select, models, selectedModel) {
+  if (!$select?.length) return;
+  const selected = String(selectedModel || '').trim();
+  const uniqueModels = Array.from(new Set([selected, ...models].filter(Boolean)));
+  const options = ['<option value="">使用连接配置里的模型</option>']
+    .concat(uniqueModels.map((model) => `<option value="${escapeHtml(model)}">${escapeHtml(model)}</option>`));
+  $select.html(options.join(''));
+  $select.val(selected);
+}
+
+function runProfileCheck(label, profileId) {
   try {
-    const result = await testConnectionProfile(contextRef, profileId, label, settings.modelOverrides[label]);
-    toastr?.success?.(`${label} profile OK (${result.latencyMs} ms)`);
+    const result = checkConnectionProfile(contextRef, profileId, label, settings.modelOverrides[label]);
+    const model = result.effectiveModel || '未设置模型';
+    toastr?.success?.(`${label} 配置可读取：${model}`);
   } catch (error) {
-    addDebugEntry('connection_test_failed', { label, error: error?.message || String(error) });
-    toastr?.error?.(`${label} profile failed: ${error?.message || error}`);
+    addDebugEntry('connection_profile_check_failed', { label, error: error?.message || String(error) });
+    toastr?.error?.(`${label} 配置检查失败：${error?.message || error}`);
   }
 }
 
