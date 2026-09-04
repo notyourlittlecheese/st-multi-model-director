@@ -1,4 +1,4 @@
-# ST Multi-Model Director v0.1A.5
+# ST Multi-Model Director v0.1A.6
 
 This is the hook prototype only.
 
@@ -19,6 +19,7 @@ Implemented:
 - Mobile-friendly settings layout.
 - Optional per-helper model picker with local model candidates.
 - Profile check buttons do not send model requests.
+- Copy debug log button and confirmation before clearing debug logs.
 
 Not implemented yet:
 

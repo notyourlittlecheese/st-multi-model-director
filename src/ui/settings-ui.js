@@ -105,7 +105,13 @@ function bindControls() {
   });
 
   $('#mmd_clear_debug').on('click', () => {
+    const confirmed = window.confirm('确定要清空 Multi-Model Director 的调试追踪吗？');
+    if (!confirmed) return;
     clearDebugEntries();
+  });
+
+  $('#mmd_copy_debug').on('click', () => {
+    copyDebugTrace();
   });
 
   $('#mmd_test_gemini').on('click', () => runProfileCheck('gemini', settings.profiles.gemini));
@@ -160,6 +166,25 @@ function runProfileCheck(label, profileId) {
 function renderDebugTrace(entries) {
   const text = entries.map((entry) => JSON.stringify(entry, null, 2)).join('\n\n');
   $('#mmd_debug_trace').val(text);
+}
+
+async function copyDebugTrace() {
+  const text = String($('#mmd_debug_trace').val() || '');
+  if (!text.trim()) {
+    toastr?.warning?.('调试日志为空');
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(text);
+    toastr?.success?.('已复制调试日志');
+  } catch (_) {
+    const textarea = document.getElementById('mmd_debug_trace');
+    textarea?.focus();
+    textarea?.select();
+    const copied = document.execCommand?.('copy');
+    toastr?.[copied ? 'success' : 'error']?.(copied ? '已复制调试日志' : '复制失败，请手动长按选择');
+  }
 }
 
 function escapeHtml(value) {
