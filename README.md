@@ -1,4 +1,4 @@
-# ST Multi-Model Director v0.1A.7
+# ST Multi-Model Director v0.1A.8
 
 This is the hook prototype only.
 
@@ -21,6 +21,7 @@ Implemented:
 - Profile check buttons do not send model requests.
 - Copy debug log button and confirmation before clearing debug logs.
 - Swipe/regenerate effective user input falls back to live chat when interceptor chat text is empty.
+- Compact mobile action buttons.
 
 Not implemented yet:
 

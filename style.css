@@ -19,6 +19,12 @@
   border-radius: 8px;
 }
 
+#mmd_settings .mmd-profile-block .mmd-button {
+  justify-self: start;
+  width: auto;
+  min-width: 140px;
+}
+
 #mmd_settings .mmd-checkbox-row {
   display: flex;
   align-items: center;
@@ -82,9 +88,12 @@
 }
 
 @media (max-width: 720px) {
-  #mmd_settings .mmd-two-col,
-  #mmd_settings .mmd-actions {
+  #mmd_settings .mmd-two-col {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  #mmd_settings .mmd-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   #mmd_settings .mmd-debug-actions {
