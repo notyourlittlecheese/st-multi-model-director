@@ -22,7 +22,7 @@ jQuery(async () => {
   await mountSettings(context);
   registerEvents();
   window.stMultiModelDirectorInterceptor = stMultiModelDirectorInterceptor;
-  addDebugEntry('extension_loaded', { version: '0.1.6-a' });
+  addDebugEntry('extension_loaded', { version: '0.1.7-a' });
 });
 
 export async function stMultiModelDirectorInterceptor(chat, contextSize, abort, type) {
@@ -41,7 +41,8 @@ export async function stMultiModelDirectorInterceptor(chat, contextSize, abort, 
   }
 
   try {
-    const turn = normalizeGenerationTurn(chat || [], type, {}, rawLastUserMessage);
+    const context = getContext();
+    const turn = normalizeGenerationTurn(chat || [], type, {}, rawLastUserMessage, context.chat || []);
     const routing = routeTurn(turn);
     const shouldSkip = ['background', 'impersonation'].includes(turn.userTurnMode);
 
@@ -52,6 +53,8 @@ export async function stMultiModelDirectorInterceptor(chat, contextSize, abort, 
         userTurnMode: turn.userTurnMode,
         isFreshUserTurn: turn.isFreshUserTurn,
         indexes: turn.indexes,
+        effectiveInputLength: turn.effectiveLastUserMessage.length,
+        effectiveInputSource: turn.effectiveInputSource,
         targetAssistantMessage: turn.targetAssistantMessage,
       },
       routing,

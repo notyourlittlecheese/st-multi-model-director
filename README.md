@@ -1,4 +1,4 @@
-# ST Multi-Model Director v0.1A.6
+# ST Multi-Model Director v0.1A.7
 
 This is the hook prototype only.
 
@@ -20,6 +20,7 @@ Implemented:
 - Optional per-helper model picker with local model candidates.
 - Profile check buttons do not send model requests.
 - Copy debug log button and confirmation before clearing debug logs.
+- Swipe/regenerate effective user input falls back to live chat when interceptor chat text is empty.
 
 Not implemented yet:
 

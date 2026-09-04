@@ -1,13 +1,13 @@
 const REPEAT_TYPES = new Set(['regenerate', 'swipe']);
 const SKIP_TYPES = new Set(['quiet', 'impersonate']);
 
-export function normalizeGenerationTurn(chat, type, options = {}, rawLastUserMessage = '') {
+export function normalizeGenerationTurn(chat, type, options = {}, rawLastUserMessage = '', liveChat = []) {
   const generationType = normalizeType(type);
   const targetAssistantIndex = findTargetAssistantIndex(chat, generationType);
   const priorUserIndex = findPriorUserIndex(chat, targetAssistantIndex);
   const lastUserIndex = findLastUserIndex(chat);
   const effectiveUserIndex = REPEAT_TYPES.has(generationType) ? priorUserIndex : lastUserIndex;
-  const effectiveLastUserMessage = getMessageText(chat, effectiveUserIndex);
+  const effectiveInput = resolveEffectiveInput(chat, liveChat, effectiveUserIndex, rawLastUserMessage, generationType);
 
   let userTurnMode = 'fresh_user_turn';
   if (REPEAT_TYPES.has(generationType)) userTurnMode = 'repeat_from_prior_user';
@@ -19,8 +19,9 @@ export function normalizeGenerationTurn(chat, type, options = {}, rawLastUserMes
     generationType,
     userTurnMode,
     rawLastUserMessage: String(rawLastUserMessage || ''),
-    effectiveLastUserMessage,
-    targetAssistantMessage: targetAssistantIndex >= 0 ? summarizeMessage(chat[targetAssistantIndex], targetAssistantIndex) : null,
+    effectiveLastUserMessage: effectiveInput.text,
+    effectiveInputSource: effectiveInput.source,
+    targetAssistantMessage: targetAssistantIndex >= 0 ? summarizeMessage(getMessage(chat, liveChat, targetAssistantIndex), targetAssistantIndex) : null,
     isFreshUserTurn: userTurnMode === 'fresh_user_turn',
     indexes: {
       targetAssistantIndex,
@@ -68,6 +69,24 @@ function findLastUserIndex(chat) {
 function getMessageText(chat, index) {
   if (index < 0 || !chat[index]) return '';
   return String(chat[index].mes || '').trim();
+}
+
+function getMessage(primaryChat, fallbackChat, index) {
+  if (index < 0) return null;
+  return primaryChat[index] || fallbackChat[index] || null;
+}
+
+function resolveEffectiveInput(chat, liveChat, index, rawLastUserMessage, generationType) {
+  const promptText = getMessageText(chat, index);
+  if (promptText) return { text: promptText, source: 'interceptor_chat' };
+
+  const liveText = getMessageText(liveChat, index);
+  if (liveText) return { text: liveText, source: 'live_context_chat' };
+
+  const rawText = String(rawLastUserMessage || '').trim();
+  if (rawText && !REPEAT_TYPES.has(generationType)) return { text: rawText, source: 'raw_last_user_message' };
+
+  return { text: '', source: 'empty' };
 }
 
 function summarizeMessage(message, index) {
